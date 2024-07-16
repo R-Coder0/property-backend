@@ -10,7 +10,15 @@ const port = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json()); // Body parser middleware
-app.use(cors()); // Enable CORS
+
+// CORS configuration
+const corsOptions = {
+    origin: 'https://thepropertiesbuilders.in', // Allow your frontend domain
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Enable cookies and authorization headers
+};
+
+app.use(cors(corsOptions)); // Enable CORS with options
 
 // Routes
 const csvRoutes = require('./routes/csvRoutes');
@@ -25,7 +33,7 @@ app.use('/api/user', userRoutes); // Assuming userRoutes is correctly defined
 app.post('/api/contact', (req, res) => {
     // Handle contact form submission logic here
     console.log('Received contact form submission:', req.body);
-    // Assuming you have logic to save contact form data to MongoDB or send email here
+    // Logic to save contact form data to MongoDB or send email here
     res.send('Contact form submitted successfully.');
 });
 
